@@ -154,6 +154,7 @@ where commission is not null;
 -- 날짜 검색
 -- between A and B : A 이상 B 이하
 select * from employee;
+
 --1982/01/01 ~ 1983 사이에 입사한 사원
 
 select *
@@ -165,6 +166,7 @@ where hiredate between '1982/01/01' and '1983/01/01';
 select ename, job, hiredate
 from employee
 where commission = 300 or commission = 500 or commission = 1400;
+공용 동의어
 
 select ename, job, hiredate
 from employee
@@ -209,9 +211,25 @@ where hiredate like '81/02%';
     
 select * 
 from employee
-order by eno;
+order by eno desc;
 
+-- 두 개 이상의 컬럼을 정렬할 때
+-- 질문답변형 게시판에서 주로 사용
 
+select * from employee
+order by dno desc;
+
+-- 1순위 dno, 2순위 ename 
+select * 
+from employee
+order by dno, ename;
+
+-- where 과 order by 를 같이 사용
+-- 커미션 없는 직원들을 이름 역순으로 정렬
+select *
+from employee
+where commission is null
+order by ename desc;
 
 
 

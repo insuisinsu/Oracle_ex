@@ -119,6 +119,16 @@ select rpad (salary, 10, '*') from employee;
 
 select lpad (1234 , 10, '*'), rpad (1234 , 10, '*') from dual
 
+-- Trim : 공백제거, 특정 문자도 제거
+    -- ltrim : 왼쪽 공백 제거
+    -- rtrim : 오른쪽 공백 제거
+    -- trim : 왼쪽 ,오른쪽 공백 제거
+    
+select ltrim('     Oracle mania     '),
+rtrim('       Oracle mania       '),
+trim('      Oracle mania     ')
+from dual;
+
 
 
 
