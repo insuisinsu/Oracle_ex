@@ -8,9 +8,9 @@ from employee;
 
 --2. 사원의 이름, 급여, 연간 총 수입이 많은것 부터 작은순으로 출력 하시오.
 --연간 총 수입은 월급에 12를 곱한후 $100의 상여금을 더해서 계산 하시오. 
-select ename, salary, salary * 12 + nvl(commission, 0)
+select ename, salary, salary * 12 + 100
 from employee
-order by salary * 12 + nvl(commission, 0) desc;
+order by salary * 12 + 100 desc;
 
 --3. 급여가 2000을 넘는 사원의 이름과 급여를 급여가 많은것 부터 작은순으로 출력하세요. 
 select ename, salary
