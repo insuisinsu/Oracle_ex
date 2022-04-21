@@ -26,7 +26,7 @@ from employee;
 
 --5. 올해 몇 일이 지났는지 출력 하시오. 현재 날짜에서 올해 1월 1일을 뺀 결과를 출력하고 TO_DATE 함수를 사용하여
 --   데이터 형식을 일치 시키시오. 
-select sysdate, trunc(sysdate - to_date(20000101, 'YYYYMMDD'))
+select sysdate, trunc(sysdate - to_date(20220101, 'YYYYMMDD'))
 from dual;
 
 
@@ -39,7 +39,7 @@ select trunc (months_between(sysdate, '1993/08/20'))
 from dual;
 
 --6. 사원들의 상관 사번을 출력하되 상관이 없는 사원에 대해서는 null 갑대신 0으로 출력 하시오. 
-select coalesce ( manager, 0)
+select coalesce ( manager, 0), nvl(manager, 0)
 from employee;
 
 --7.  DECODE 함수로 직급에 따라 급여를 인상하도록 하시오. 직급이 'ANAIYST' 사원은 200 , 'SALESMAN' 사원은 180,
@@ -55,10 +55,23 @@ from employee;
 select eno, rpad(substr(eno, 1, 2), 4, '*') "가린 번호", ename, rpad(substr(ename, 1, 1),4,'*') "가린 이름"
 from employee;
 
+select eno, rpad(substr(eno, 1, 2), 4, '*') "가린 번호",
+ename, rpad(substr(ename, 1, 1),length(ename),'*') "가린 이름"
+from employee;
+
 -- 주민번호 를 출력하되 뒷자리 1 까지만, 나머지는 *로 가림, 전화번호 앞2 뒤4 *로 가리기
 select rpad(substr('930820 - 1234567', 1, 10), 16, '*'),
 rpad(substr('010-7799-3025', 1, 6), 13, '*')
 from dual;
+
+-- 010-77**-****
+select rpad(substr('010-7799-3025', 1, 6), 8, '*') || rpad(substr('010-7799-3025', 9, 1), 5, '*')
+from dual;
+
+
+SELECT rpad(rpad('951123-1111111', 8), 14, '*'), rpad(rpad('010-1111-1111', 6), 13, '*')
+from dual;
+
 
 -- 사원번호, 사원명, 직속상관 
     -- 직속상관의 사원번호가 없을 경우 0000
@@ -74,7 +87,25 @@ select eno, ename, manager,  case  WHEN manager is null THEN 0000
                                   WHEN substr(manager, 1, 2) = 77 THEN 6666
                                   WHEN substr(manager, 1, 2) = 78 THEN 7777
                                   WHEN substr(manager, 1, 2) = 75 THEN 8888
-                                   ELSE eno
+                                   ELSE manager
                                   END as eno
+from employee;
+
+select eno, ename, manager,  case  WHEN manager is null THEN '0000'
+                                  WHEN substr(manager, 1, 2) = '76' THEN '5555'
+                                  WHEN substr(manager, 1, 2) = '77' THEN '6666'
+                                  WHEN substr(manager, 1, 2) = '78' THEN '7777'
+                                  WHEN substr(manager, 1, 2) = '75' THEN '8888'
+                                   ELSE to_char (manager, '9999')
+                                  END as eno
+from employee;
+
+select eno, ename, manager, case when manager like '75%' then 5555
+                                when manager like '76%' then 6666
+                                when manager like '77%' then 7777
+                                when manager like '78%' then 8888
+                                when manager is null then 0000
+                                else manager
+                            END as 번호
 from employee;
 
