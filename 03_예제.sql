@@ -10,7 +10,7 @@ from employee
 where substr ( hiredate, 4, 2) = 04;
 
 
---3. MOD 함수를 사용하여 직속상관이 홀수인 사원만 출력하시오. 
+--3. MOD 함수를 사용하여 직속상관이 홀수인 사원만 출력하시오.  
 select *
 from employee
 where mod ( manager , 2) != 0;

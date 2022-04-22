@@ -248,19 +248,79 @@ from employee e, department d, salgrade s
 where e.dno = d.dno
 and salary between losal and hisal
 
+/*
+JOIN 에서 USING 을 사용하는 경우
+    NATURAL JOIN : 공통 키 컬럼을 Oracle 내부에서 자동으로 처리
+                - 반드시 두 테이블의 공통키 컬럼의 데이터 타입이 같아야 함
+            - 두 테이블의 공통키 컬럼의 데이터 타입이 다른경우 USING 을 사용
+            - 두 테이블의 공통 키 컬럼이 여러개인 경우 USING 을 사용
+*/
 
+/*
+SELF JOIN : 자기 자신의 테이블을 조인한다.
+        - 주로 사원의 상사 정보를 출려할 때 사용함, 조직도 같은
+        - 별칭을 사용해야 함
+        - select 절 : 어느 테이블의 컬럼인지 명시해야 함  /  별칭명.컬럼명
+*/
 
+select eno, ename, manager
+from employee
+where manager = 7788
 
+--self join 을 사용해서 사원의 이름과 직속상관의 이름을 출력
+select e.eno as 사원번호, e.ename as 사원이름, e.manager as 상관번호, m.ename as 상관이름
+from employee e, employee m    -- Self Join
+where e.manager = m.eno
+order by e.ename
 
+select e.ename || ' 의 직속상관은 ' || e.manager || ' 입니다.'
+from employee e, employee m
+where e.manager = m.eno
+order by e.ename
 
+select eno, ename, manager, eno, ename
+from employee
 
+-- EQUI JOIN 으로 SELF JOIN 을 처리
 
+-- ANSI 호환 : INNER JOIN 으로 처리
+select e.eno, e.ename, e.manager, m.ename
+from employee e join employee m
+on e.manager = m.eno
 
+select e.ename || ' 의 직속상관은 ' || e.manager || ' 입니다.'
+from employee e join employee m
+on e.manager = m.eno
 
+/*
+OUTER JOIN
+    : 특정 컬럼의 두 테이블에서 공통적이지 않은 내용을 출력할 때 사용
+    : Null 로 출력됨
+    : ( + ) 를 사용하여 출력 ( Oracle ) 
+    : RIGHT/LEFT OUTER JOIN 을 사용하여 출력 ( ANSI )
+        . Left Outer Join : 공통적인 부분이 없더라도 왼쪽 테이블은 무조건 출력
+        . Right Outer Join : 공통적인 부분이 없더라도 오른쪽 테이블은 무조건 출력
+        . Full Outer Join : 공통적인 부분이 없더라도 양쪽 테이블은 무조건 출력
+*/
+--OUTER JOIN - ( + ) 사용
+select e.ename, m.ename
+from employee e join employee m
+on e.manager = m.eno (+)
+order by e.ename
 
-
-
-
-
-
-
+--OUTER JOIN - ANSI
+--left outer join
+select e.ename, m.ename
+from employee e left outer join employee m
+on e.manager = m.eno
+order by e.ename
+--right outer join
+select e.ename, m.ename
+from employee e right outer join employee m
+on e.manager = m.eno
+order by e.ename
+--full outer join
+select e.ename, m.ename
+from employee e full outer join employee m
+on e.manager = m.eno
+order by e.ename
