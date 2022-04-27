@@ -106,7 +106,17 @@ select * from orders;
 
 commit;
 
-select count(*) from tb_zipcode
+-- zip_seq 컬럼의 정렬이 제대로 되지 않음.
+-- 그 이유는? 
+select count(*) from tb_zipcode;
+select * from tb_zipcode
+order by zip_seq;
+
+select * from tb_zipcode
+where zip_seq = '4';
+
+desc tb_zipcode;
+
 
 
 
