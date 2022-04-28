@@ -1,4 +1,4 @@
---8일차  뷰, 시퀀스, 인덱스
+--8일차  뷰
 
 /*
 뷰(view) : 가상의 테이블
@@ -102,8 +102,41 @@ select * from user_constraints
 where table_name = 'DEPT_COPY60'
 
 
+/*
+예제
+*/
+create view emp_view
+as
+select * from employee;
+-- 뷰 생성
+create view v_em_dno
+as
+select eno, ename, dno
+from emp_view
+where dno = 20;
 
+-- 뷰 실행
+select * from v_em_dno;
 
+create or replace view v_em_dno
+as
+select eno, ename, dno, salary from emp_view
+where dno = 20;
+
+-- 뷰 제거
+drop view v_em_dno;
+
+create or replace view v_sal_emp
+as 
+select dno as dno, min(salary) as min, max(salary) as max, round(avg(salary), 2) as avg, sum(salary) as sum
+from emp_view
+group by dno;
+
+select * from v_sal_emp;
+
+-- 읽기 전용으로 만들기
+-- view 생성할 때 마지막 줄에 추가
+with read only;
 
 
 
