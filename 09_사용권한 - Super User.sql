@@ -63,6 +63,15 @@ temporary tablespace temp;
 alter user usertest02
 quota 1m on users;
 
+/*
+테이블 스페이스 : 객체와 Log 를 저장하는 물리적인 파일
+    DataFile : 객체를 저장하고 있음
+    Log      : Transaction Log 를 저장
+    
+    DataFile 과 Log 파일은 물리적으로 다른 하드공간에 저장해야 성능을 높일 수 있음
+        -RAID 된 공간에 저장하면 성능을 높일 수 있음
+
+*/
 
 
 
