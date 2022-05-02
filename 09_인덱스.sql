@@ -142,26 +142,7 @@ on emp_copy91 ( salary * 12 );
 drop index idx_emp_copy91_allsal;
 
 
-/*
-권한관리
 
-    사용권한
-    . DBMS 는 여러 명이 사용함
-    . DBMS 에 접속할 수 있는 사용자를 생성
-        .. 인증( Authentication   : Credential = ( Identity + Password ) 확인)
-        .. 허가( Authorization    : 인증된 사용자에게 Oracle 의 시스템 권한, 객체 사용권한
-            ... System Privileges : 오라클의 전반적인 권한 할당
-            ... Object Privileges : 객체 사용에 관한 전반적인 권한 할당
-                (테이블, 뷰, 트리거, 함수, 저장프로시저, 시퀀스, 인덱스 등)
-*/
-
--- Oracle 에서 계정 생성
--- 일반 계정에서는 계정을 생성할 수 있는 권한이 없음
-
-show user;
-
--- create user id identified by pw;
-create user usertest01 identified by 1234;
 
 
 

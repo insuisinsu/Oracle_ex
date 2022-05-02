@@ -28,6 +28,71 @@ grant create session to usertest01;
 
 grant create table to usertest01;
 
+
+/*
+권한관리
+
+    사용권한
+    . DBMS 는 여러 명이 사용함
+    . DBMS 에 접속할 수 있는 사용자를 생성
+        .. 인증( Authentication   : Credential = ( Identity + Password ) 확인)
+        .. 허가( Authorization    : 인증된 사용자에게 Oracle 의 시스템 권한, 객체 사용권한
+            ... System Privileges : 오라클의 전반적인 권한 할당, 테이블 스페이스 내에서 전반적인 권한
+            ... Object Privileges : 객체 사용에 관한 전반적인 권한 할당
+                (테이블, 뷰, 트리거, 함수, 저장프로시저, 시퀀스, 인덱스 등)
+*/
+
+-- Oracle 에서 계정 생성
+-- 일반 계정에서는 계정을 생성할 수 있는 권한이 없음
+
+--Object Pricileges : 테이블, 뷰, 트리거, 함수
+    -- 저장 프로시져, 시퀀스, 인덱스에 부여되는 권한 할당
+    
+/*
+    권한      Table       View        Sequence        Procedeur
+    Alter       O                       O
+    Delete      O           O  
+    Execute                                                 O
+    Index       O 
+    Insert      O           O
+    References  O
+    Select      O           O           O 
+    Update      O           O
+*/    
+
+-- 특정 테이블에 select 권한 부여하기
+-- 계정 생성
+-- Autication(인증) : credential( ID + PW )
+create user user_test10 identified by 1234;
+-- Authorization(허가) : system 권한 할당
+grant create session, create table, create view to user_test10;
+-- 계정을 생성하면 기본적으로 system 테이블 스페이스를 사용함 <- 관리자만 사용가능한 테이블
+-- 테이블 스페이스를 USERS 로 변경
+Alter user user_test10
+default tablespace "USERS"
+temporary tablespace "TEMP";
+
+-- 특정 계정에서 객체를 생성하면 그 계정이 그 객체를 소유하게 됨
+
+select * from dba_tables
+where owner in ('HR', 'USER_TEST10');
+
+-- user_test10 에서 HR 이 소유주인 employee 테이블을 접근할 때 객체의 접근권한 필요
+-- 객체 룰력시 객체명 앞에 객체를 소유한 소유주명을 넣어줘야함
+    -- 단, 자기 객체는 생략 가능
+select * from hr.employee; 
+-- 권한 부여
+grant select on hr.employee to user_test10;
+
+
+
+show user;
+
+-- create user id identified by pw;
+create user usertest01 identified by 1234;
+
+-- 
+
 /*
 테이블 스페이스 ( Table Space )
     - 객체를 저장할 수 있는 공간
