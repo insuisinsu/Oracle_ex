@@ -1,4 +1,4 @@
--- 10일차 PL / SQL - 오라클에 프로그래밍 요소를 적용한 sql
+-- 12일차 PL / SQL - 오라클에 프로그래밍 요소를 적용한 sql
 
 /*
     SQL : 구조화된 질의언어 but 유연한 프로그래밍 기능을 적용할 수 없음
@@ -261,4 +261,33 @@ begin
     close c1;
 end;
 /
+
+/*
+employee 테이블의 사원번호, 사원명, 월급, 부서번호를 출력,,  부서가 20, 30 인 사람만
+*/
+
+set serveroutput on
+
+declare
+    v_emp employee%rowtype;
+    cursor c1
+    is 
+    select eno, ename, salary, dno
+    from employee
+    where dno in (20, 30);
+begin
+    dbms_output.put_line('사원번호   사원이름   월급   부서번호');
+    dbms_output.put_line('---------------------------------');
+    open c1;
+    loop
+        fetch c1 into v_emp.eno, v_emp.ename, v_emp.salary, v_emp.dno;
+        exit when c1%notfound;
+        dbms_output.put_line(v_emp.eno ||'   '|| v_emp.ename ||'   '|| v_emp.salary ||'   '|| v_emp.dno);
+    end loop;
+    close c1;
+end;
+/
+
+
+
 
