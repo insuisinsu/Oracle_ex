@@ -17,6 +17,8 @@ select * from freeboard
 order by id
 drop table freeboard
 
+commit
+
 create sequence aa
     increment by 1
     start with 1
@@ -33,7 +35,10 @@ select * from freeboard
 order by masterid desc, replaynum, step, id
 -- masterid 컬럼에 중복된 값이 있을 경우, replaynum 컬럼을 asc,,, setp,,, id
 
+delete freeboard
+where email = 'asdf@asdf.com'
 
+commit
 
 /*
  id 컬럼 : 새로운 글이 등록될 때, id 컬럼의 최대값을 가져와서 +1 하여 저장됨 = 새로운 글 번호에 대한 넘버링
