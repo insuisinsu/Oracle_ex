@@ -54,8 +54,13 @@ commit
 */
 
 
+insert into freeboard(id,name,password,email,subject,content,inputdate,masterid,readcount,replaynum,step)
+values(71, 'teset','1234','test','test','test''','22-05-13 11:48 ¿ÀÀü',71,0,0,0)
 
-
+select * from freeboard
+delete freeboard
+where name = 'teset'
+commit
 
 
 
