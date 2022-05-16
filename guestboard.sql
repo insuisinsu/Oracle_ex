@@ -10,4 +10,5 @@ create table guestboard(
 commit
 
 select * from guestboard
+order by inputdate
 delete guestboard
